@@ -1,0 +1,26 @@
+{
+	"rateLimiter": {
+		"enabled": true,
+		"config": {
+			"windowInMins": 15,
+			"max": 10,
+			"standardHeaders": true,
+			"legacyHeaders": false
+		}
+	},
+	"email": {
+		"accounts": [
+			{
+				"email": "me@jck.cx",
+				"user": "jack",
+				"name": "Jack Bailey",
+				"default": true
+			},
+			{
+				"email": "me@yasminwilson.com",
+				"user": "yasminwilson",
+				"name": "Yasmin Wilson"
+			}
+		]
+	}
+}

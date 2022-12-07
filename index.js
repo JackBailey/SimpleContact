@@ -12,10 +12,10 @@ import handlebars from "handlebars";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-const config = JSON.parse(fs.readFileSync("../config.json"));
+const config = JSON.parse(fs.readFileSync("./config.json"));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-dotenv.config("../.env");
+dotenv.config();
 
 const clientIP = (req) => {
 	return (

@@ -1,7 +1,7 @@
 {
 	"name": "SimpleContact",
 	"version": "1.0.0",
-	"main": "src/index.js",
+	"main": "api/index.js",
 	"type": "module",
 	"license": "MIT",
 	"dependencies": {
@@ -11,11 +11,5 @@
 		"express-rate-limit": "^6.7.0",
 		"handlebars": "^4.7.7",
 		"nodemailer": "^6.8.0"
-	},
-	"engines": {
-		"node": "16.x"
-	},
-	"scripts": {
-		"start": "node src/index.js"
 	}
 }

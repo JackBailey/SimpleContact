@@ -76,6 +76,10 @@ if (config.rateLimiter.enabled) {
 
 const port = process.env.PORT || 3000;
 
+app.get("/", (req, res) => {
+	res.send("OK.");
+});
+
 app.get("/contact", (req, res) => {
 	const referer = req.header("Referer");
 	const errors = {};

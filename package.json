@@ -16,6 +16,6 @@
 		"node": "16.x"
 	},
 	"scripts": {
-		"start": "node ."
+		"start": "node src/index.js"
 	}
 }

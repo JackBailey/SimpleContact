@@ -116,8 +116,6 @@ app.post("/", (req, res) => {
 
 	const { name, email: userEmail, message } = req.body;
 
-	return res.send("OK");
-
 	readHTMLFile(__dirname + "/templates/email.html", function (err, html) {
 		if (err) {
 			console.log("error reading file", err);

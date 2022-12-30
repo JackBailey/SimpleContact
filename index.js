@@ -73,6 +73,7 @@ if (config.rateLimiter.enabled) {
 		legacyHeaders,
 		keyGenerator: (req) => clientIP(req),
 	});
+
 	app.use("/", limiter);
 }
 
@@ -85,6 +86,8 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
 	const referer = req.header("Referer");
 	const errors = {};
+
+	console.log(`${clientIP(req)} | has requested to send an email`);
 
 	const recipient = config.email.accounts.find((account) => {
 		if (req.query.user) {
@@ -135,6 +138,8 @@ app.post("/", (req, res) => {
 			replyTo: userEmail,
 			html: htmlToSend,
 		};
+
+		console.log(`${clientIP(req)} | has sent an email from ${userEmail} to ${recipient.email}`);
 
 		transporter.sendMail(email, function (error) {
 			if (error) {

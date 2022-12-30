@@ -12,7 +12,7 @@ import handlebars from "handlebars";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-const config = JSON.parse(fs.readFileSync("./config.json"));
+const config = JSON.parse(fs.readFileSync("config.json"));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
@@ -80,7 +80,7 @@ app.get("/", (req, res) => {
 	res.send("OK.");
 });
 
-app.get("/contact", (req, res) => {
+app.post("/contact", (req, res) => {
 	const referer = req.header("Referer");
 	const errors = {};
 

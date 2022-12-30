@@ -71,7 +71,13 @@ if (config.rateLimiter.enabled) {
 		max,
 		standardHeaders,
 		legacyHeaders,
-		keyGenerator: (req) => clientIP(req),
+		keyGenerator: (request, response) =>
+			request.headers["cf-connecting-ip"] ||
+			request.headers["x-client-ip"] ||
+			request.headers["x-real-ip"] ||
+			request.headers["x-forwarded-for"] ||
+			request.socket.remoteAddress ||
+			request.ip,
 	});
 
 	app.use("/", limiter);

@@ -11,15 +11,15 @@
 	"email": {
 		"accounts": [
 			{
-				"email": "jack@jackbailey.dev",
-				"user": "jack",
-				"name": "Jack Bailey",
+				"email": "john@example.com",
+				"user": "john",
+				"name": "John Doe",
 				"default": true
 			},
 			{
-				"email": "me@yasminwilson.com",
-				"user": "yasminwilson",
-				"name": "Yasmin Wilson"
+				"email": "james@example.com",
+				"user": "james",
+				"name": "James Doe"
 			}
 		]
 	}

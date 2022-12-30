@@ -78,6 +78,10 @@ if (config.rateLimiter.enabled) {
 
 const port = process.env.PORT || 3000;
 
+app.get("/", (req, res) => {
+	res.redirect("https://github.com/JackBailey/SimpleContact");
+});
+
 app.post("/", (req, res) => {
 	const referer = req.header("Referer");
 	const errors = {};

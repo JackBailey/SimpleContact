@@ -11,6 +11,7 @@ import fs from "fs";
 import handlebars from "handlebars";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import cors from "cors";
 
 const config = JSON.parse(fs.readFileSync("config.json"));
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -40,6 +41,7 @@ const readHTMLFile = (path, callback) => {
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 const { EMAIL_HOST: host, EMAIL_USERNAME: user, EMAIL_PASSWORD: password, EMAIL_PORT: emailPort, EMAIL_SSL: secure } = process.env;
 
@@ -137,12 +139,14 @@ app.post("/contact", (req, res) => {
 		transporter.sendMail(email, function (error) {
 			if (error) {
 				return res.status(500).json({
+					success: false,
 					errors: {
 						server: "there was an error sending the email",
 					},
 				});
 			} else {
 				return res.status(200).json({
+					success: true,
 					message: "email sent",
 				});
 			}

@@ -64,20 +64,14 @@ transporter.verify().then((success) => {
 });
 
 if (config.rateLimiter.enabled) {
-	const { windowInMins, max, standardHeaders, legacyHeaders } = config.rateLimiter;
+	const { windowInMins, max, standardHeaders, legacyHeaders } = config.rateLimiter.config;
 
 	const limiter = rateLimit({
 		windowMs: windowInMins * 60 * 1000,
 		max,
 		standardHeaders,
 		legacyHeaders,
-		keyGenerator: (request, response) =>
-			request.headers["cf-connecting-ip"] ||
-			request.headers["x-client-ip"] ||
-			request.headers["x-real-ip"] ||
-			request.headers["x-forwarded-for"] ||
-			request.socket.remoteAddress ||
-			request.ip,
+		keyGenerator: (request, response) => clientIP(request),
 	});
 
 	app.use("/", limiter);
@@ -121,6 +115,8 @@ app.post("/", (req, res) => {
 		});
 
 	const { name, email: userEmail, message } = req.body;
+
+	return res.send("OK");
 
 	readHTMLFile(__dirname + "/templates/email.html", function (err, html) {
 		if (err) {

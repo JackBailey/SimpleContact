@@ -73,16 +73,12 @@ if (config.rateLimiter.enabled) {
 		legacyHeaders,
 		keyGenerator: (req) => clientIP(req),
 	});
-	app.use("/contact", limiter);
+	app.use("/", limiter);
 }
 
 const port = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-	res.send("OK.");
-});
-
-app.post("/contact", (req, res) => {
+app.post("/", (req, res) => {
 	const referer = req.header("Referer");
 	const errors = {};
 

@@ -1,0 +1,26 @@
+{
+	"rateLimiter": {
+		"enabled": true,
+		"config": {
+			"windowInMins": 15,
+			"max": 10,
+			"standardHeaders": true,
+			"legacyHeaders": false
+		}
+	},
+	"email": {
+		"accounts": [
+			{
+				"email": "john@example.com",
+				"user": "john",
+				"name": "John Doe",
+				"default": true
+			},
+			{
+				"email": "james@example.com",
+				"user": "james",
+				"name": "James Doe"
+			}
+		]
+	}
+}

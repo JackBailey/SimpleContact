@@ -13,4 +13,4 @@ services:
             - EMAIL_PORT=
             - EMAIL_SSL=
         volumes:
-            - ./config.json:/app/config.json
+            - ./config:/app/config/config.json

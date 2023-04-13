@@ -13,7 +13,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 
-const config = JSON.parse(fs.readFileSync("config/config.json"));
+const config = JSON.parse(fs.readFileSync("config.json"));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();

@@ -38,6 +38,27 @@ const readHTMLFile = (path, callback) => {
 	});
 };
 
+const checkEmail = async (email) => {
+	let params = new URLSearchParams();
+	params.append("email", email);
+	params.append("json", "true");
+	try {
+		const response = await fetch(`https://api.stopforumspam.org/api?${params.toString()}`);
+		const data = await response.json();
+
+		if (!data.success) {
+			if (data.email.error) {
+				throw new Error(`Error checking email ${email} with stopforumspam. Error: ${data.email.error}`);
+			}
+			throw new Error(`Error checking email ${email} with stopforumspam. Response: ${data}`);
+		} else {
+			return [data.email, null];
+		}
+	} catch (error) {
+		return [null, error.message];
+	}
+};
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -114,21 +135,41 @@ app.post("/", (req, res) => {
 			errors,
 		});
 
-	const { name, email: userEmail, message } = req.body;
+	const { name, email: userEmail } = req.body;
+	let { message } = req.body;
 
-	readHTMLFile(__dirname + "/templates/email.html", function (err, html) {
+	readHTMLFile(__dirname + "/templates/email.html", async function (err, html) {
 		if (err) {
 			console.log("error reading file", err);
 			return;
 		}
 
 		const template = handlebars.compile(html);
-
+		
+		let footer = "";
+		
+		if (config.enableStopForumSpam) {
+			let checkEmailResponse = await checkEmail(userEmail);
+			
+			if (checkEmailResponse[1]) {
+				console.log(checkEmailResponse[1]);
+				return res.status(500).json({
+					success: false,
+					errors: {
+						server: "There was an error checking your message, please try again later",
+					}
+				});
+			}
+			
+			footer += `\n<hr>\n<a href="https://www.stopforumspam.com/search?q=${encodeURI(userEmail)}">Spam results</a>: ${checkEmailResponse[0].frequency}${checkEmailResponse[0].confidence ? "<br>Confidence: " + checkEmailResponse[0].confidence + "%" : ""}`;
+		}
+		
 		const htmlToSend = template({
 			name,
 			email: userEmail,
 			message,
 			referer: referer ? ` ${referer}` : "",
+			footer,
 		});
 
 		const email = {
